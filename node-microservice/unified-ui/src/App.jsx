@@ -6,12 +6,12 @@ function App() {
   const API_URL = import.meta.env.VITE_API_URL;
 useEffect(() => {
   // Initial fetch of all messages
-  fetch(`${API_URL}/messages`)
+  fetch(`/api/messages`)
     .then(res => res.json())
     .then(data => setMessages(data));
 
   // Live updates via Server-Sent Events
-  const events = new EventSource(`${API_URL}/events`);
+  const events = new EventSource(`/api/events`);
 
   events.onmessage = (event) => {
     const newMessage = JSON.parse(event.data);
@@ -28,14 +28,14 @@ useEffect(() => {
 
   // Send a new message
   const sendMessage = async () => {
-    await fetch(`${API_URL}/messages`, {
+    await fetch(`/api/messages`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content })
     });
 
     // Refresh messages
-    const updated = await fetch(`${API_URL}/messages`).then(res => res.json());
+    const updated = await fetch(`/api/messages`).then(res => res.json());
     setMessages(updated);
     setContent("");
   };

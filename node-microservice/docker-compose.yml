@@ -38,6 +38,13 @@ services:
       - "8080:8080"
     depends_on:
       - db
+  frontend:
+    build: ./unified-ui
+    container_name: unified-ui-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
 
 volumes:
   pgdata:
